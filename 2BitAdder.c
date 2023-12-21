@@ -11,7 +11,8 @@ int pin17 = 17;
 int pin16 = 16;
 int pin15 = 15;
 
-const int interval = 2500; // Set interval of display in milliseconds
+const int interval = 1500; // Set interval of display in milliseconds
+const int numberOfBits = 2;
 
 void setup()
 {
@@ -62,15 +63,15 @@ void loop() {
             
             if (subtract == 1) {
               // Check if bottom number is negative
-              if (bitRead(sumOfBottom, 1) == 1) {
+              if (bitRead(sumOfBottom, (numberOfBits - 1)) == 1) {
                 subtractOverflow = true;
               }
               bitWrite(sumOfBottom, 0, bitRead(~(B0_Counter), 0));
               bitWrite(sumOfBottom, 1, bitRead(~(B1_Counter), 0));
               sumOfBottom++;
-              bitWrite(sumOfBottom, 2, 0);
+              bitWrite(sumOfBottom, (numberOfBits), 0);
               // Check if bottom number is still negative after flip, if so, its overflow
-              if ((subtractOverflow == 1) && (bitRead(sumOfBottom, 1) == 1)) {
+              if ((subtractOverflow == 1) && (bitRead(sumOfBottom, (numberOfBits - 1)) == 1)) {
                 overflow = true;
               }
             } else {
@@ -79,11 +80,11 @@ void loop() {
             }
             
             sum = sumOfTop + sumOfBottom;
-            bitWrite(sum, 2, 0);
+            bitWrite(sum, (numberOfBits), 0);
 
             // Check for overflow
-            if (bitRead(sumOfTop, 1) == bitRead(sumOfBottom, 1)) {
-              if (bitRead(sumOfTop, 1) != bitRead(sum, 1)) {
+            if (bitRead(sumOfTop, (numberOfBits - 1)) == bitRead(sumOfBottom, (numberOfBits - 1))) {
+              if (bitRead(sumOfTop, (numberOfBits - 1)) != bitRead(sum, (numberOfBits - 1))) {
                 overflow = true;
               }
             }
@@ -93,7 +94,7 @@ void loop() {
               bitWrite(sumOfBottomDecimal, 0, bitRead(~(sumOfBottomDecimal), 0));
               bitWrite(sumOfBottomDecimal, 1, bitRead(~(sumOfBottomDecimal), 1));
               sumOfBottomDecimal++;
-              bitWrite(sumOfBottomDecimal, 2, 0);
+              bitWrite(sumOfBottomDecimal, numberOfBits, 0);
               sumOfBottomDecimal = sumOfBottomDecimal * -1;
             }
             
@@ -101,16 +102,16 @@ void loop() {
               bitWrite(sumOfTopDecimal, 0, bitRead(~(sumOfTopDecimal), 0));
               bitWrite(sumOfTopDecimal, 1, bitRead(~(sumOfTopDecimal), 1));
               sumOfTopDecimal++;
-              bitWrite(sumOfTopDecimal, 2, 0);
+              bitWrite(sumOfTopDecimal, numberOfBits, 0);
               sumOfTopDecimal = sumOfTopDecimal * -1;
             }
             
             sumDecimal = sum;
-            if (bitRead(sum, 1) == 1) {
+            if (bitRead(sum, (numberOfBits - 1)) == 1) {
               bitWrite(sumDecimal, 0, bitRead(~(sum), 0));
               bitWrite(sumDecimal, 1, bitRead(~(sum), 1));
               sumDecimal++;
-              bitWrite(sumDecimal, 2, 0);
+              bitWrite(sumDecimal, numberOfBits, 0);
               sumDecimal = sumDecimal * -1;
             }
             
@@ -126,20 +127,16 @@ void loop() {
             );
             Serial.print("  (" + String(sumOfTopDecimal) + ")\n");
             if (subtract == 1) {
-              Serial.print(
-                " -  " +
-                String(B1_Counter) +
-                String(B0_Counter)
-              );
+              Serial.print(" -  ");
             } else {
-              Serial.print(
-                " +  " +
-                String(B1_Counter) +
-                String(B0_Counter)
-              );
+              Serial.print(" +  ");
             }
+            Serial.print(
+              String(B1_Counter) +
+              String(B0_Counter)
+            );
             Serial.print("  (" + String(sumOfBottomDecimal) + ")\n");
-            Serial.print(" ------\n  ");
+            Serial.print(" --------\n  ");
             Serial.print(
               "  " +
               String(bitRead(sum, 1)) +
