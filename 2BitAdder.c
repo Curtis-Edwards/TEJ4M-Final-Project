@@ -24,7 +24,7 @@ void setup()
 }
 
 void loop() {
-  for (int subtract = 1; subtract <= 1; subtract++) {
+  for (int subtract = 0; subtract <= 1; subtract++) {
     for (int A1_Counter = 0; A1_Counter <= 1; A1_Counter++) {
       for (int A0_Counter = 0; A0_Counter <= 1; A0_Counter++) {
         for (int B1_Counter = 0; B1_Counter <= 1; B1_Counter++) {
@@ -42,9 +42,9 @@ void loop() {
             // Variables
             int sum = 0;
             int sumDecimal = 0;
-			      int sumOfTop = 0;
+            int sumOfTop = 0;
             int sumOfTopDecimal = 0;
-			      int sumOfBottom = 0;
+            int sumOfBottom = 0;
             int sumOfBottomDecimal = 0;
             bool overflow = false;
             bool subtractOverflow = false;
