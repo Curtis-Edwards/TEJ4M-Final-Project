@@ -21,7 +21,7 @@ int pin7 = 7;
 int pin6 = 6;
 int pin5 = 5;
 
-const int interval = 1500; // Set interval of display in milliseconds
+const int interval = 2000; // Set interval of display in milliseconds
 const int numberOfBits = 7;
 
 void setup()

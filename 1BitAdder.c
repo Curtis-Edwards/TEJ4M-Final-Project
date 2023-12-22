@@ -12,6 +12,9 @@ int sum = 0;
 int sumOfTop = 0;
 int sumOfBottom = 0;
 
+const int interval = 2000; // Set interval of display in milliseconds
+const int numberOfBits = 1;
+
 void setup()
 {
   pinMode(pin19, OUTPUT);
@@ -21,65 +24,50 @@ void setup()
 }
 
 void loop() {
-  //for (int subtract = 0; subtract <= 1; subtract++) {
+  for (int C0_Counter = 0; C0_Counter <= 1; C0_Counter++) {
     for (int A0_Counter = 0; A0_Counter <= 1; A0_Counter++) {
       for (int B0_Counter = 0; B0_Counter <= 1; B0_Counter++) {
-        int subtract = 0;
-        //digitalWrite(pin19, subtract);
+        digitalWrite(pin19, C0_Counter);
         digitalWrite(pin18, B0_Counter);
         digitalWrite(pin17, A0_Counter);
         
-        sumOfTop = (A0_Counter * 1);
-        sumOfBottom = (B0_Counter * 1);
-        if (subtract == 0){
-          sum = (
-            (A0_Counter * 1)
-            +
-            (B0_Counter * 1)
-          );
-        } else {
-          sum = (
-            (A0_Counter * 1)
-            +
-            (bitRead(~(B0_Counter), 0) * 1)
-          );
-        }
-        
+        /*                */
+        /*  CALCULATIONS  */
+        /*                */
+
+        // Variables
+        int sum = 0;
+        int sumOfTop = 0;
+        int sumOfBottom = 0;
+        int sumOfCarry = 0;
         bool overflow = false;
-        if (A0_Counter == B0_Counter) {
-          if (A0_Counter != bitRead(sum, 0)) {
+        bitWrite(sumOfTop, 0, A0_Counter);
+        bitWrite(sumOfBottom, 0, B0_Counter);
+        bitWrite(sumOfCarry, 0, C0_Counter);
+        
+        sum = sumOfTop + sumOfBottom + sumOfCarry;
+
+        if (bitRead(sum, numberOfBits) == 1) {
           overflow = true;
-          }
         }
         
-        if (subtract == 0){
-          Serial.print("\n\n");
-          Serial.print("    " + String(A0_Counter));
-          Serial.print("  (" + String(sumOfTop) + ")\n");
-          Serial.print(" +  " + String(B0_Counter));
-          Serial.print("  (" + String(sumOfBottom) + ")\n");
-          Serial.print(" ------\n  ");
-          Serial.print("  " + String(bitRead(sum, 0)));
-          if (overflow == true) {
-            Serial.print("  <- Overflow");
-          } else {
-            Serial.print("  (" + String(sum) + ")\n");
-          }
+        Serial.print("\n\n");
+        Serial.print("    " + String(C0_Counter));
+        Serial.print("  (" + String(sumOfCarry) + ")\n");
+        Serial.print("    " + String(A0_Counter));
+        Serial.print("  (" + String(sumOfTop) + ")\n");
+        Serial.print(" +  " + String(B0_Counter));
+        Serial.print("  (" + String(sumOfBottom) + ")\n");
+        Serial.print(" ------\n  ");
+        Serial.print("  " + String(bitRead(sum, 0)));
+        if (overflow == true) {
+          Serial.print("  <- Overflow");
         } else {
-          Serial.print("\n\n");
-          Serial.print("    " + String(A0_Counter));
-          Serial.print("  (" + String(sumOfTop) + ")\n");
-          Serial.print(" -  " + String(B0_Counter));
-          Serial.print("  (" + String(sumOfBottom) + ")\n");
-          Serial.print(" ------\n  ");
-          Serial.print("  " + String(bitRead(sum, 0)));
           Serial.print("  (" + String(sum) + ")\n");
         }
-        
-        delay(2000); // Wait for 1000 millisecond(s)
+        delay(interval); // Wait for xxxx millisecond(s)
       }
     }
-  //}
+  }
   Serial.print("\n");
 }
-        
