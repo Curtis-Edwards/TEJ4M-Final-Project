@@ -2,7 +2,7 @@
 Curtis Edwards
 TEJ4M
 Final Project
-8-Bit Full Adder and Subtractor with scenarios
+8-Bit Full Adder and Subtractor with scenarios (Addition)
 */
 
 int pin19 = 19;
@@ -23,7 +23,7 @@ int pin5 = 5;
 int pin4 = 4;
 int pin3 = 3;
 
-const int interval = 2000; // Set interval of display in milliseconds
+const int interval = 6000; // Set interval of display in milliseconds
 const int numberOfBits = 8;
 
 void setup()
@@ -55,10 +55,32 @@ void loop() {
     /*   SCENARIOS    */
     /*                */
 
+    int A7_Counter = 0;
+    int A6_Counter = 0;
+    int A5_Counter = 0;
+    int A4_Counter = 0;
+    int A3_Counter = 0;
+    int A2_Counter = 0;
+    int A1_Counter = 0;
+    int A0_Counter = 0;
+    int B7_Counter = 0;
+    int B6_Counter = 0;
+    int B5_Counter = 0;
+    int B4_Counter = 0;
+    int B3_Counter = 0;
+    int B2_Counter = 0;
+    int B1_Counter = 0;
+    int B0_Counter = 0;
+    int subtract = 0;
+
     if (scenario == 0) {
       // Scenario 01:
       // Positive number + Positive number
       // 77 + 43 = 120
+
+      Serial.print("Scenario 01:\n");
+      Serial.print("Positive number + Positive number\n");
+      Serial.print("77 + 43 = 120");
 
       A7_Counter = 0;
       A6_Counter = 1;
@@ -85,6 +107,10 @@ void loop() {
       // Positive number + Positive number, with overflow
       // 102 + 39 = 141
 
+      Serial.print("Scenario 02:\n");
+      Serial.print("Positive number + Positive number, with overflow\n");
+      Serial.print("102 + 39 = 141");
+
       A7_Counter = 0;
       A6_Counter = 1;
       A5_Counter = 1;
@@ -109,6 +135,10 @@ void loop() {
       // Scenario 03:
       // Negative number + Positive number, with positive output
       // (-22) + 85 = 63
+
+      Serial.print("Scenario 03:\n");
+      Serial.print("Negative number + Positive number, with positive output\n");
+      Serial.print("(-22) + 85 = 63");
 
       A7_Counter = 1;
       A6_Counter = 1;
@@ -135,6 +165,10 @@ void loop() {
       // Negative number + Positive number, with negative output
       // (-74) + 61 = -13
 
+      Serial.print("Scenario 04:\n");
+      Serial.print("Negative number + Positive number, with negative output\n");
+      Serial.print("(-74) + 61 = -13");
+
       A7_Counter = 1;
       A6_Counter = 0;
       A5_Counter = 1;
@@ -160,6 +194,10 @@ void loop() {
       // Positive number + Negative number, with positive output
       // 117 + (-54) = 63
 
+      Serial.print("Scenario 05:\n");
+      Serial.print("Positive number + Negative number, with positive output\n");
+      Serial.print("117 + (-54) = 63");
+
       A7_Counter = 0;
       A6_Counter = 1;
       A5_Counter = 1;
@@ -179,62 +217,88 @@ void loop() {
       B0_Counter = 0;
     }
     if (scenario == 5) {
-      // Scenario 05:
-      // Positive number + Negative number, with positive output
-      // 117 + (-54) = 63
+      // Scenario 06:
+      // Positive number + Negative number, with negative output
+      // 65 + (-70) = -5
+
+      Serial.print("Scenario 06:\n");
+      Serial.print("Positive number + Negative number, with negative output\n");
+      Serial.print("65 + (-70) = -5");
+
 
       A7_Counter = 0;
       A6_Counter = 1;
-      A5_Counter = 1;
-      A4_Counter = 1;
+      A5_Counter = 0;
+      A4_Counter = 0;
       A3_Counter = 0;
-      A2_Counter = 1;
+      A2_Counter = 0;
       A1_Counter = 0;
       A0_Counter = 1;
 
       B7_Counter = 1;
-      B6_Counter = 1;
-      B5_Counter = 0;
-      B4_Counter = 0;
+      B6_Counter = 0;
+      B5_Counter = 1;
+      B4_Counter = 1;
       B3_Counter = 1;
       B2_Counter = 0;
       B1_Counter = 1;
       B0_Counter = 0;
     }
     if (scenario == 6) {
+      // Scenario 07:
+      // Negative number + Negative number
+      // (-36) + (-17) = -53
 
+      Serial.print("Scenario 07:\n");
+      Serial.print("Negative number + Negative number\n");
+      Serial.print("(-36) + (-17) = -53");
+
+      A7_Counter = 1;
+      A6_Counter = 1;
+      A5_Counter = 0;
+      A4_Counter = 1;
+      A3_Counter = 1;
+      A2_Counter = 1;
+      A1_Counter = 0;
+      A0_Counter = 0;
+
+      B7_Counter = 1;
+      B6_Counter = 1;
+      B5_Counter = 1;
+      B4_Counter = 0;
+      B3_Counter = 1;
+      B2_Counter = 1;
+      B1_Counter = 1;
+      B0_Counter = 1;
     }
     if (scenario == 7) {
+      // Scenario 08:
+      // Negative number + Negative number, with underflow
+      // (-86) + (-59) = -145
 
+      Serial.print("Scenario 08:\n");
+      Serial.print("Negative number + Negative number, with underflow\n");
+      Serial.print("(-86) + (-59) = -145");
+
+      A7_Counter = 1;
+      A6_Counter = 0;
+      A5_Counter = 1;
+      A4_Counter = 0;
+      A3_Counter = 1;
+      A2_Counter = 0;
+      A1_Counter = 1;
+      A0_Counter = 0;
+
+      B7_Counter = 1;
+      B6_Counter = 1;
+      B5_Counter = 0;
+      B4_Counter = 0;
+      B3_Counter = 0;
+      B2_Counter = 1;
+      B1_Counter = 0;
+      B0_Counter = 1;
     }
-    if (scenario == 8) {
-
-    }
-    if (scenario == 9) {
-
-    }
-    if (scenario == 10) {
-
-    }
-    if (scenario == 11) {
-
-    }
-    if (scenario == 12) {
-
-    }
-    if (scenario == 13) {
-
-    }
-    if (scenario == 14) {
-
-    }
-    if (scenario == 15) {
-
-    }
-    if (scenario == 16) {
-
-    }
-
+    
     digitalWrite(pin19, subtract);
     digitalWrite(pin18, B0_Counter);
     digitalWrite(pin17, A0_Counter);
@@ -432,9 +496,9 @@ void loop() {
       String(bitRead(sum, 0))
     );
     if (overflow == true) {
-      Serial.print("  <- Overflow");
+      Serial.print("  <- Overflow/Underflow\n\n\n");
     } else {
-      Serial.print("  (" + String(sumDecimal) + ")\n");
+      Serial.print("  (" + String(sumDecimal) + ")\n\n\n");
     }
     delay(interval); // Wait for xxxx millisecond(s)
   }
